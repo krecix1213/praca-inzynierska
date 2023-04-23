@@ -1,0 +1,40 @@
+version: "3.3"
+services:
+    apache:
+        build: ./Apache
+        hostname: markus_apache
+        container_name: markus_apache
+        image: markus_apache
+        volumes:
+        - markusApacheDrive:/var/www/
+        - ${SITES}:/etc/apache2/sites-available/
+        #- ${APACHE_CONF}:/etc/apache2/apache2.conf
+        #- ${PHP_INI}:/etc/php/7.4/cli/php.ini
+        ports:
+        - '8081:80'
+    postgres:
+      build: ./PostgreSQL
+      hostname: markus_postgres
+      container_name: markus_postgres
+      image: markus_postgres
+      user: postgres
+      environment:
+        PGDATA: /var/lib/postgresql/data/pgdata
+      volumes:
+        - markusPostgresDrive:/var/lib/postgresql/data/pgdata
+      ports:
+      - '5542:5432'
+volumes:
+    markusApacheDrive:
+      driver: local
+      driver_opts:
+        type: none
+        o: bind
+        device: ./app/markusApacheDrive
+    markusPostgresDrive:
+      driver: local
+      driver_opts:
+        type: none
+        o: bind
+        device: ./app/markusPostgresDrive
+

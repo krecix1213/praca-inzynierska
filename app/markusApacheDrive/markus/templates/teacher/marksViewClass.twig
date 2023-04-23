@@ -1,0 +1,19 @@
+{% extends "teacher/base.index.twig" %}
+
+{% block title %} Zobacz oceny - {{className}} - Nauczyciel{% endblock %}
+
+{% block body %}
+{% include "_partials/marksWeigth.html.twig" %}
+<table class="table">
+<tr><td>Lp.</td><td>Imie Nazwisko</td><td>Przedmiot</td><td>Oceny</td></tr>
+{% set i = 1%}
+{% for k,v in marks %}
+<tr><td>{{i}}</td><td>{{k}}</td>
+{% for keySub,valSub in v %}
+ <td>{{keySub}}</td> <td>{% for m in valSub %} <span>{{marks(m.marks, m.subjectShortcut, m.weight, m.teacher)|raw}}</span> {% endfor %}</td>
+{% endfor %}
+</tr>
+{% set i = i + 1%}
+{% endfor %}
+</table>
+{% endblock %}

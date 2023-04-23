@@ -1,0 +1,28 @@
+{% extends "teacher/base.index.twig" %}
+
+{% block title %} Dodaj oceny - {{className}} - Nauczyciel{% endblock %}
+
+{% block body %}
+    <form action="{{path('marksAddClass',{id:classId})}}" method="post" >
+    <label for"subject">Przedmiot</label>
+    <select class="form-select" name="subject" id="subject">
+    {% for v in schoolSubject %}
+        <option value="{{v.id}}">{{v.name}}</option>
+    {% endfor %}
+    </select><br/>
+    <label for="weight">Waga</label>
+    <input  class="form-control" type="number" name="weight" placeholder="5" min="1" max="99" /><br/>
+    <table class="table">
+        <thead><tr><th>Lp.</th><th>Imie i nazwisko</th><th>Oceny</th></tr></thead>
+        {% set i = 1 %}
+        <tbody>
+        {% for v in schoolClassList %}
+        <tr><td>{{i}}</td><td>{{v.name}} {{v.surname}}</td><td><input  class="form-control" type="text" name="student[{{v.id}}]" placeholder="3+,5-,4" /></td></tr>
+        {% set i = i + 1 %}
+        {% endfor %}
+        </tbody>
+    </table>
+    
+    <input type="submit" class="form-control"  value="Dodaj Oceny" />
+    </form>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "admin/base.html.twig" %}
+
+
+{% block body %}
+<form>
+<label for="mark">Ocena</label>
+<input class="form-control" id="mark" type="text" name="mark" value="{{mark.mark}}">
+
+<label for="weight">Waga</label>
+<input class="form-control" type="number" id="weight" name="weight" value="{{mark.weight}}">
+
+<label for="teacher">Nauczyciel</label>
+<select class="form-control" id="teacher" name="teacher">
+{% for v in teacher %}
+<option value="{{v.id}}">{{v.name}} {{v.surname}}</option>
+{% endfor %}
+</select>
+
+<label for="student">Student</label>
+<select class="form-control" id="student" name="student">
+{% for v in student %}
+<option value="{{v.id}}">{{v.name}} {{v.surname}}</option>
+{% endfor %}
+</select>
+
+<label for="schoolSubject">Przedmiot</label>
+<select class="form-control" id="schoolSubject" name="schoolSubject">
+{% for v in schoolSubject %}
+<option value="{{v.id}}">{{v.name}}</option>
+{% endfor %}
+</select>
+</form>
+{% endblock %}

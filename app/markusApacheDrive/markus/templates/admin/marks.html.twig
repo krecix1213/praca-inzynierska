@@ -1,0 +1,12 @@
+{% extends "admin/base.html.twig" %}
+
+{% block body %}
+<table class="table">
+        <tr><th>Lp.</th><th>Klasa</th><th>#</th></tr>
+        {% set i = 1 %}
+        {% for v in schoolClassList %}
+            <tr><td>{{i}}</td><td>{{v.symbol}}</td><td><a href="{{path('marksClassPageAdmin',{id:v.id})}}">Edytuj Oceny</a></td></td></tr>
+            {% set i = i + 1%}
+        {% endfor %}
+</table>
+{% endblock %}

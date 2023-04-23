@@ -1,0 +1,22 @@
+{% extends "admin/base.html.twig" %}
+
+
+{% block body %}
+{% include "_partials/marksWeigth.html.twig" %}
+<table class="table">
+        <tr><th>Lp.</th><th>Imie i nazwisko Studenta</th><th>Oceny</th></tr>
+        {% set i = 1 %}
+        {% for k,v in arrayMark %}
+            <tr><td>{{i}}</td><td>{{k}}</td>
+            <td>
+            {% for k,m in v %}
+            {% for valueM in m %}
+                <a href="{{path('markEditPageAdmin', {id:valueM.id})}}" target="_blank">
+                {{marks(valueM.marks, valueM.subjectShortcut, valueM.weight, valueM.teacher)|raw}}</a>
+            {% endfor %}
+            {% endfor %}
+            </td></tr>
+            {% set i = i + 1%}
+        {% endfor %}
+</table>
+{% endblock %}

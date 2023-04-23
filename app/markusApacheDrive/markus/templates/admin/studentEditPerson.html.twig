@@ -1,0 +1,29 @@
+{% extends "admin/base.html.twig" %}
+
+{% block body %}
+    <form class="m-4">
+        <label for="Name">Imię</label>
+        <input class="form-control" type="text" id="Name" name="Name" value="{{student.name}}" /><br />
+
+        <label for="Surname">Nazwisko</label>
+        <input class="form-control" id="Surname" type="text" name="Surname" value="{{student.surname}}" /><br />
+
+        <label for="Telephone">Telefon</label>
+        <input class="form-control" id="Telephone" type="tel" name="Telephone" value="{{student.telephone}}" /><br />
+
+        <label for="email">Email</label>
+        <input class="form-control" id="email" type="email" name="Email" value="{{student.email}}" /><br />
+
+        <label for="nig">PESEL</label>
+        <input class="form-control" id="nig" type="number" name="NIG" value="{{student.NumberIdentGoverment}}" /><br />
+
+        <label for="class">Klasa</label>
+        <select class="form-select" id="class" name="class">
+        {% for v in classList %}
+            <option value="{{v.id}}">{{v.symbol}}</option>
+        {% endfor %}
+        </select><br />
+
+        <input class="form-control" type="submit" value="Zapisz" />
+    </form>
+{% endblock %}

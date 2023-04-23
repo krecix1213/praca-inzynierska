@@ -1,0 +1,26 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %} Sprawdz nieobcecności - {#{{className}}#} - Nauczyciel{% endblock %}
+
+{% block body %}
+<form>
+
+{% for v in absence.json.students %}
+    {{v.name}} {{v.surname}} <input type="checkbox" name="student[]" value="{{v.id}}" {% if v.id in studentListId %}checked{% endif %} /><br />
+{% endfor %}
+<hr />
+{% for v in lessonList %}
+    {{v.name}} <input type="radio" name="lesson" value="{{v.id}}" {% if v.id == absence.lesson %}checked{% endif %} /><br />
+{% endfor %}
+<hr />
+{% for v in teacherList %}
+    {{v.name}} {{v.surname}} <input type="radio" name="teacher" value="{{v.id}}" {% if v.id == absence.teacher %}checked{% endif %} /><br />
+{% endfor %}
+
+<input type="date" name="data" value="{{absence.date}}" />
+
+{% for v in hours.timesJson.godziny %}
+     {{v.rozpoczecie}} - {{v.koniec}}<input type="radio" name="teacher" value="{{v.rozpoczecie}}" {% if v.rozpoczecie == absence.hour %}checked{% endif %} /><br />
+{% endfor %}
+</form>
+{% endblock %}

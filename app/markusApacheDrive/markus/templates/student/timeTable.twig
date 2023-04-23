@@ -1,0 +1,22 @@
+{% extends "student/base.index.twig" %}
+{% block title %} Plan Zajęć - Student{% endblock %}
+{% block body %}
+{% set i = 0 %}
+<table class="table">
+    <tr>
+        <th>Lp.</th><th>Godziny</th><th>Poniedziałek</th><th>Wtorek</th><th>Środa</th><th>Czwartek</th><th>Piątek</th>
+    </tr>
+    {% for value in hours.godziny %}
+    <tr>
+        <td>{{i}}</td>
+        <td>{{value.rozpoczecie}} - {{value.koniec}}</td>
+        <td>{{plan.Poniedzialek[i].Przedmiot|default('')}}</td>
+        <td>{{plan.Wtorek[i].Przedmiot|default('')}}</td>
+        <td>{{plan.Sroda[i].Przedmiot|default('')}}</td>
+        <td>{{plan.Czwartek[i].Przedmiot|default('')}}</td>
+        <td>{{plan.Piatek[i].Przedmiot|default('')}}</td>
+        {% set i = i + 1 %}
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "student/base.index.twig" %}
+
+{% block title %} Oceny - Student{% endblock %}
+
+{% block body %}
+{% include "_partials/marksWeigth.html.twig" %}
+Twoje Oceny:
+<table class="table">
+<tr><th style="width:25%">Przedmiot</th><th>Oceny</th><th style="width:10%">Średnia z ocen</th></tr>
+{% for key,value in marks %}
+<tr>
+    <td><b>{{key}}</b></td>
+    <td>
+    {% for valueM in value %}
+        <a href="{{path('marksStudentId', {id:valueM.id})}}" target="_blank">{# TODO do nowego okna#}
+            {{marks(valueM.marks, valueM.subjectShortcut, valueM.weight, valueM.teacher)|raw}}</a>
+    {% endfor %}
+    <td>{{marksAvg[key]}}</td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}

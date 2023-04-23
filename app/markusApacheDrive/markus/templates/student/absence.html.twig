@@ -1,0 +1,18 @@
+{% extends "student/base.index.twig" %}
+{% block title %} Nieobcecności - Student{% endblock %}
+{% block body %}
+Twoje Nieobcecności:
+<table class="table">
+<tr><th>Lp.</th><th>Przedmiot</th><th>Data</th><th>Nauczyciel</th><th>Typ</th></tr>
+{% set i = 1 %}
+{% for v in absence %}
+    <tr>
+        <td>{{i}}</td>
+        <td>{{v.przedmiot}}</td>
+        <td>{{v.data}}</td>
+        <td>{{v.nauczyciel.getName}} {{v.nauczyciel.getSurname}}</td>
+        <td>{{absenceType(v.json.type)}}</td>
+    </tr>
+    {% set i = i + 1 %}
+{% endfor %}
+{% endblock %}

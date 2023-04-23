@@ -1,0 +1,13 @@
+{% extends "student/base.index.twig" %}
+
+{% block title %} Szczegóły Oceny- Student{% endblock %}
+{% block body %}
+<table>
+<tr> <td>Ocena</td> <td>{{marks.marks}}</td> </tr>
+<tr> <td>Waga</td> <td>{{marks.weight}}</td> </tr>
+<tr> <td>Przedmiot</td> <td>{{marks.subject}}</td> </tr>
+<tr> <td>Nauczyciel</td> <td>{{marks.teacher}}</td> </tr>
+<tr> <td>Data</td> <td>{{marks.ts}}</td> </tr>
+
+</table>
+{% endblock %}

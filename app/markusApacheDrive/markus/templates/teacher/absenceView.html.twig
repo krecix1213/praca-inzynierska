@@ -1,0 +1,24 @@
+{% extends "teacher/base.index.twig" %}
+
+{% block title %} Sprawdz nieobcecności - {{className}} - Nauczyciel{% endblock %}
+
+{% block body %}
+<table class="table">
+<tr><th>Lp.</th><th>Nauczyciel</th><th>Przedmiot</th><th>Data</th><th>Lista studentów</th></tr>
+{% set i = 1 %}
+    {% for v in absence %}        
+        <tr>
+            <td>{{i}}</td>
+            <td>{{v.teacher}}</td>
+            <td>{{v.lesson}}</td>
+            <td>{{v.data}}</td>
+            <td>
+                {% for j in v.json.students %}        
+                    <p>{{j.name}} {{j.surname}}</p>
+                {% endfor %}
+            </td>
+        </tr>
+        {% set i = i + 1 %}
+    {% endfor %}
+</table>
+{% endblock %}

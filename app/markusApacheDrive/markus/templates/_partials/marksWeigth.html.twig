@@ -1,0 +1,62 @@
+<style>
+.marks{
+  position: relative;
+  display: inline-block;
+  border:1px #000 solid;
+  margin:0 20px;
+  width:35px;
+  text-align:center;
+  color:#000;
+}
+
+.marks .marksTooltip {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.marks .marksTooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.marks:hover .marksTooltip {
+  visibility: visible;
+  opacity: 1;
+}
+.weight1{
+    background-color:#e0a98d;
+}
+.weight2{
+    background-color:#017a3d;
+}
+.weight3{
+    background-color:#e892eb;
+}
+.weight4{
+    background-color:#8eb6d8;
+}
+.weight5{
+    background-color:#a7f75f;
+}
+.weight6{
+    background-color:#9d9a3d;
+}
+</style>
