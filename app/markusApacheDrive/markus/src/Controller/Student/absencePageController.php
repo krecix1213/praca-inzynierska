@@ -21,19 +21,19 @@ class absencePageController extends AbstractController
     {
         $user = $doctrine->getRepository(Student::class)->findOneBy(['fk_id_user'=>$this->getUser()->getId()]);
         $absence = array();
-        $absenceDoctrine = $doctrine->getRepository(Absence::class)->searchAbsence($this->getUser()->getId());
+        $absenceDoctrine = $doctrine->getRepository(Absence::class)->searchAbsence($user->getId());
         foreach($absenceDoctrine as $v){
+            $teacherTmp = $doctrine->getRepository(Teacher::class)->find($v['fk_teacher_id_id']);
+            $dateTmp = new \DateTimeImmutable($v['date'], new \DateTimeZone("Europe/Warsaw"));
             $tmp=array(
-                'przedmiot' => $doctrine->getRepository(SchoolSubject::class)->find($v['fk_id_school_lesson_id'])->getName(),
-                'przedmiotSkrot' => $doctrine->getRepository(SchoolSubject::class)->find($v['fk_id_school_lesson_id'])->getShortcut(),
-                'nauczyciel' => $doctrine->getRepository(Teacher::class)->find($v['fk_teacher_id_id']),
-                'data' => $v['date'],
+                'subject' => $doctrine->getRepository(SchoolSubject::class)->find($v['fk_id_school_lesson_id'])->getName(),
+                'teacher' => $teacherTmp->getName()." ".$teacherTmp->getSurname(),
+                'date' => $dateTmp->format("Y-m-d H:i"),
                 'ts' => $v['ts']
             );
-            $json = json_decode($v['students'],true);
-            $json = $json['students'];
-            $k = array_search($this->getUser()->getId(),array_column($json,'id'));
-            $tmp['json']=$json[$k];
+            $json = json_decode($v['students'],true)['students'];
+            $k = array_search($user->getId(),array_column($json,'id'));
+            if($k) $tmp['json']=$json[$k];
             array_push($absence,$tmp);
         }
         return $this->render('student/absence.html.twig', [
