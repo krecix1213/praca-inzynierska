@@ -18,19 +18,16 @@ class marksPageController extends AbstractController
     public function index(ManagerRegistry $doctrine): Response
     {
         $user= $doctrine->getRepository(Student::class)->findOneBy(['fk_id_user'=>$this->getUser()->getId()]);
-        $marksDoctrine = $doctrine->getRepository(Marks::class)->findBy(array('fk_id_user_student' => $this->getUser()->getId()),array('fk_id_schoolSubject' => 'ASC'));
+        $marksDoctrine = $doctrine->getRepository(Marks::class)->findBy(array('fk_id_user_student' => $user->getId()),array('fk_id_schoolSubject' => 'ASC'));
         $marksAvg = $marks = array();
+        $i=0;
         foreach($marksDoctrine as $v){
-            if(isset($marks[$v->getFkIdSchoolSubject()->getName()])){
-            $i = count($marks[$v->getFkIdSchoolSubject()->getName()]);
-            }else{
-                $i =0;
-            }
             $marks[$v->getFkIdSchoolSubject()->getName()][$i]['id'] = $v->getId();
             $marks[$v->getFkIdSchoolSubject()->getName()][$i]['subjectShortcut'] = $v->getFkIdSchoolSubject()->getShortcut();
             $marks[$v->getFkIdSchoolSubject()->getName()][$i]['marks'] = $v->getMark();
             $marks[$v->getFkIdSchoolSubject()->getName()][$i]['weight']= $v->getWeight();
             $marks[$v->getFkIdSchoolSubject()->getName()][$i]['teacher']= $v->getTeacher()->getName()." ".$v->getTeacher()->getSurname();
+            $i++;
         }
         foreach($marks as $key => $subject){
             $sumWeight = $sumMarks = 0;
@@ -58,7 +55,7 @@ class marksPageController extends AbstractController
             'weight' => $marksDoctrine->getWeight(),
             'teacher' => $marksDoctrine->getTeacher()->getName()." ".$marksDoctrine->getTeacher()->getSurname(),
             'subject' => $marksDoctrine->getFkIdSchoolSubject()->getName(),
-            'ts' => $marksDoctrine->getTs()->format("d-M-Y H:i:s")
+            'ts' => $marksDoctrine->getTs()->format("d-M-Y H:i")
         );
         return $this->render('student/marksPage.html.twig', [
             'user' => $user,

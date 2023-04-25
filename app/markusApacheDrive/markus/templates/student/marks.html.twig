@@ -12,7 +12,7 @@ Twoje Oceny:
     <td><b>{{key}}</b></td>
     <td>
     {% for valueM in value %}
-        <a href="{{path('marksStudentId', {id:valueM.id})}}" target="_blank">{# TODO do nowego okna#}
+        <a href="{{path('marksStudentId', {id:valueM.id})}}" target="_blank">
             {{marks(valueM.marks, valueM.subjectShortcut, valueM.weight, valueM.teacher)|raw}}</a>
     {% endfor %}
     <td>{{marksAvg[key]}}</td>
