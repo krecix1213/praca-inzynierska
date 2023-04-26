@@ -14,7 +14,7 @@
             <td>{{v.data}}</td>
             <td>
                 {% for j in v.json.students %}        
-                    <p>{{j.name}} {{j.surname}}</p>
+                    <p>{{j.name}} {{j.surname}} - {{absenceType(j.type)}}</p>
                 {% endfor %}
             </td>
         </tr>
