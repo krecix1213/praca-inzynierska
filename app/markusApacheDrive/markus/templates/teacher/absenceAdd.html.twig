@@ -3,30 +3,45 @@
 {% block title %} Dodaj nieobecnosci - {{className}} - Nauczyciel{% endblock %}
 
 {% block body %}
-    <form action="{{path('AbsenceAddTeacher',{id:classId})}}" method="post" >
-        <label for"subject">Przedmiot</label>
-        <select class="form-select" name="subject" id="subject">
-        {% for v in schoolSubject %}
-            <option value="{{v.id}}">{{v.name}}</option>
-        {% endfor %}
-        </select><br/>
-        <label for"date">Data</label>
-        <input type="date" name="date" required/>
-        <select class="form-select" name="dateHours" id="dateHours">
-        {% for v in hours %}
-            <option value="{{v}}">{{v}}</option>
-        {% endfor %}
-        </select><br/>
-        <table class="table">
-            <thead><tr><th>Lp.</th><th>Imie i Nazwisko</th><th>OB<th>NB</th><th>SP</th></tr></thead>
-            <tbody>
-            {% set i = 1 %}
-            {% for v in schoolClassList %}
-                <tr><td>{{i}}</td><td>{{v.name}} {{v.surname}}</td><td><input type="checkbox" name="student[OB][{{v.id}}]"/></td><td><input type="checkbox" name="student[NB][{{v.id}}]"/></td><td><input type="checkbox" name="student[SP][{{v.id}}]"/></td></tr>
-            {% set i = i + 1 %}
-            {% endfor %}
-            </tbody>
-        </table>
+<style>
+form div{
+    padding:30px 0;
+}
+</style>
+    <form action="{{path('AbsenceAddTeacher',{id:classId})}}" method="post" class="m-3" >
+        <div>
+            <label for"subject">Przedmiot</label>
+            <select class="form-select" name="subject" id="subject">
+                {% for v in schoolSubject %}
+                    <option value="{{v.id}}">{{v.name}}</option>
+                {% endfor %}
+            </select><hr />
+        </div>
+
+        <div>
+            <label for"date">Data</label>
+            <input type="date" name="date" value="{{today}}" required/>
+            <label for="dateHours">Godzina</label>
+            <select class="form-select" name="dateHours" id="dateHours" style="width: 80%;display: inline-block;">
+                {% for v in hours %}
+                    <option value="{{v}}">{{v}}</option>
+                {% endfor %}
+            </select><hr/>
+        </div>
+
+        <div>
+            <table class="table">
+                <thead><tr><th>Lp.</th><th>Imie i Nazwisko</th><th>OB<th>NB</th><th>SP</th></tr></thead>
+                <tbody>
+                {% set i = 1 %}
+                    {% for v in schoolClassList %}
+                        <tr><td>{{i}}</td><td>{{v.name}} {{v.surname}}</td><td><input type="checkbox" name="student[OB][{{v.id}}]"/></td><td><input type="checkbox" name="student[NB][{{v.id}}]"/></td><td><input type="checkbox" name="student[SP][{{v.id}}]"/></td></tr>
+                        {% set i = i + 1 %}
+                    {% endfor %}
+                </tbody>
+        </table><hr />
+        </div>
+
         <input type="submit" class="form-control" value="Dodaj nieobecnosci" />
     </form>
 {% endblock %}

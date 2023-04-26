@@ -8,9 +8,9 @@ Twoje Nieobcecności:
 {% for v in absence %}
     <tr>
         <td>{{i}}</td>
-        <td>{{v.przedmiot}}</td>
-        <td>{{v.data}}</td>
-        <td>{{v.nauczyciel.getName}} {{v.nauczyciel.getSurname}}</td>
+        <td>{{v.subject}}</td>
+        <td>{{v.date}}</td>
+        <td>{{v.teacher}}</td>
         <td>{{absenceType(v.json.type)}}</td>
     </tr>
     {% set i = i + 1 %}

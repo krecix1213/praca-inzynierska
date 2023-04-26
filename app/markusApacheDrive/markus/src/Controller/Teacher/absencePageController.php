@@ -49,11 +49,11 @@ class absencePageController extends AbstractController
                 'data' => $v->getDate()->format('d-m-Y H:i:s'),
                 'json' => $v->getStudents(),
             );
-            $flagaInsert = FALSE;
+            $flagContain = FALSE;
             foreach($tmp['json']['students'] as $s){
-                if((in_array($s['id'],$classIdStudents)) !== FALSE) $flagaInsert = TRUE;
+                if((in_array($s['id'],$classIdStudents)) !== FALSE) $flagContain = TRUE;
             }
-            if($flagaInsert === TRUE) array_push($absence,$tmp);
+            if($flagContain === TRUE) array_push($absence,$tmp);
         }
 
         return $this->render('teacher/absenceView.html.twig', [
@@ -73,9 +73,10 @@ class absencePageController extends AbstractController
         foreach($timeTableHours as $v){
             $hours[] = $v['rozpoczecie']." - ".$v['koniec'];
         }
+        $today = date("Y-m-d");
         return $this->render('teacher/absenceAdd.html.twig', [
             'user' => $user, 'className' => $className, 'classId'=>$id, 'schoolSubject' => $schoolSubject,
-            'schoolClassList' => $schoolClassList, 'hours' => $hours
+            'schoolClassList' => $schoolClassList, 'hours' => $hours, 'today'=>$today
         ]); 
     }
      /**
@@ -97,8 +98,8 @@ class absencePageController extends AbstractController
                 );
                 array_push($array,$tmp);
             }}
-            if(isset($data['student']['NB'])){
-        foreach($data['student']['NB'] as $k => $v){
+        if(isset($data['student']['NB'])){
+            foreach($data['student']['NB'] as $k => $v){
             $tmp=array(
                 'id'=>$k,
                 'name'=>$doctrine->getRepository(Student::class)->find($k)->getName(),
