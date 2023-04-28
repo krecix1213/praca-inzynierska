@@ -82,7 +82,6 @@ class marksPageController extends AbstractController
         $schoolSubject = $doctrine->getRepository(SchoolSubject::class)->find($data['schoolSubject']);
         $teacher = $doctrine->getRepository(Teacher::class)->find($data['teacher']);
         $student = $doctrine->getRepository(Student::class)->find($data['student']);
-        dump($teacher);
         $mark = $data['mark'];
         if(preg_match("/(\d)(\-)/",$mark) || preg_match("/(-)(\d)/",$mark)){
             $mark = str_replace("-","",$mark);
