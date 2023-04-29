@@ -1,26 +1,48 @@
 {% extends "admin/base.html.twig" %}
 
-{% block title %} Sprawdz nieobcecności - {#{{className}}#} - Nauczyciel{% endblock %}
+{% block title %} Edytuj Nieobecności - Admin {% endblock %}
 
 {% block body %}
-<form>
-
+<form action="{{path('AbsenceAddAdmin',{id:id})}}" class="m-4" method="POST">
+<table class="table" style="width:30%">
+<tr><th>Imie i nazwisko</th><th>Obecny</th><th>Nieobecny</th><th>Spóźnienie</th><th>Nieoznaczony</th></tr>
 {% for v in absence.json.students %}
-    {{v.name}} {{v.surname}} <input type="checkbox" name="student[]" value="{{v.id}}" {% if v.id in studentListId %}checked{% endif %} /><br />
-{% endfor %}
-<hr />
-{% for v in lessonList %}
-    {{v.name}} <input type="radio" name="lesson" value="{{v.id}}" {% if v.id == absence.lesson %}checked{% endif %} /><br />
-{% endfor %}
-<hr />
-{% for v in teacherList %}
-    {{v.name}} {{v.surname}} <input type="radio" name="teacher" value="{{v.id}}" {% if v.id == absence.teacher %}checked{% endif %} /><br />
-{% endfor %}
+    <tr><td>{{v.name}} {{v.surname}}</td>
 
-<input type="date" name="data" value="{{absence.date}}" />
+    <br />
+    <td> <input type="radio" name="student[OB][{{v.id}}]" {% if v.id in studentListId and v.type=='OB' %}checked{% endif %} /></td>
+    <td> <input type="radio" name="student[NB][{{v.id}}]" {% if v.id in studentListId and v.type=='NB' %}checked{% endif %} /></td>
+    <td> <input type="radio" name="student[SP][{{v.id}}]" {% if v.id in studentListId and v.type=='SP' %}checked{% endif %} /></td>
+    <td>{% if v.id not in studentListId %}X{% endif %}</td>
+    </tr>
+{% endfor %}
+</table>
+<hr />
 
+    <label for="subject">Przedmiot</label>
+    <select class="form-control" id="subject" name="subject">
+        {% for v in lessonList %}
+            <option value="{{v.id}}" {% if v.id == absence.lesson %}selected{% endif %}>{{v.name}}</option>
+        {% endfor %}
+    </select>
+<hr />
+    <label for="teacher">Nauczyciel</label>
+    <select class="form-control" id="teacher" name="teacher">
+        {% for v in teacherList %}
+            <option value="{{v.id}}" {% if v.id == absence.teacher %}selected{% endif %}>{{v.name}} {{v.surname}}</option>
+        {% endfor %}
+    </select>
+<hr />
+<label for="date">Data</label>
+<input class="form-control" type="date" name="date" value="{{absence.date}}" /><br />
+
+<table class="table" style="width:30%">
+<tr><th>Godziny</th><th>X</th></tr>
 {% for v in hours.timesJson.godziny %}
-     {{v.rozpoczecie}} - {{v.koniec}}<input type="radio" name="teacher" value="{{v.rozpoczecie}}" {% if v.rozpoczecie == absence.hour %}checked{% endif %} /><br />
+     <tr><td>{{v.rozpoczecie}} - {{v.koniec}}</td><td><input type="radio" name="dateHours" value="{{v.rozpoczecie}} - {{v.koniec}}" {% if v.rozpoczecie == absence.hour %}checked{% endif %} /></td></tr>
 {% endfor %}
+</table>
+
+<input class="form-control" type="submit" value="Zapisz" />
 </form>
 {% endblock %}

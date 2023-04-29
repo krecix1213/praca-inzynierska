@@ -85,7 +85,7 @@ class absencePageController extends AbstractController
         }
         return $this->render('admin/absenceEdit.html.twig', [
             'user' => $user, 'absence' => $absence, 'studentList' => $studentList, 'studentListId' => $studentListId,
-            'teacherList' => $teacherList, 'lessonList'=>$lessonList, 'hours'=>$hours
+            'teacherList' => $teacherList, 'lessonList'=>$lessonList, 'hours'=>$hours, 'id'=>$id
         ]);
     }
      /**
@@ -94,7 +94,6 @@ class absencePageController extends AbstractController
     public function absenceAdd(EntityManagerInterface $em,ManagerRegistry $doctrine, Request $request, int $id): Response
     {
         $data = $request->request->all();
-        $schoolSubject = $doctrine->getRepository(SchoolSubject::class)->find($data['subject']);
         $array=array();
         if(isset($data['student']['OB'])){
             foreach($data['student']['OB'] as $k => $v){
@@ -126,20 +125,23 @@ class absencePageController extends AbstractController
                 );
                 array_push($array,$tmp);
         }}
+        
         $students = array('students'=>$array);
         $date = $data['date'];
         $dateHours = preg_match("/\d?\d:\d\d -/",$data['dateHours'],$match);
         $dateHours = substr($match[0],0,-2);
+        $schoolSubject = $doctrine->getRepository(SchoolSubject::class)->find($data['subject']);
+        $teacher = $doctrine->getRepository(Teacher::class)->find($data['teacher']);
         $date = $date." ".$dateHours;
         $dt = new \DateTimeImmutable($date, new \DateTimeZone("Europe/Warsaw"));
-        $absence = new Absence();
+        $absence = $doctrine->getRepository(Absence::class)->find($id);
         $absence->setFkIdSchoolLesson($schoolSubject);
-        $absence->setFkTeacherId($userDoctrine);
+        $absence->setFkTeacherId($teacher);
         $absence->setStudents($students);
         $absence->setDate($dt);
         $em->persist($absence);
         $em->flush();
-        return $this->redirectToRoute('absenceClassViewPageTeacher',['id' => $id]);
+        return $this->redirectToRoute('AbsenceEditAdmin',['classId'=>$data['subject'] ,'id' => $id]);
     }
 
 }
