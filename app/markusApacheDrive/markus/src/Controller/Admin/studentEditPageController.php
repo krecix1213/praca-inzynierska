@@ -33,7 +33,26 @@ class studentEditPageController extends AbstractController
         $student = $doctrine->getRepository(Student::class)->find($id);
         $classList = $doctrine->getRepository(SchoolClass::class)->findAll();
         return $this->render('admin/studentEditPerson.html.twig', [
-            'user' => $user, 'student' => $student, 'classList' => $classList
+            'user' => $user, 'student' => $student, 'classList' => $classList, 'id'=>$id
         ]);
+    }
+    /**
+     * @Route("/admin/student/edit/{id}", name="StudentSaveAdmin")
+     */
+    public function studentSave(EntityManagerInterface $em,ManagerRegistry $doctrine, Request $request, int $id): Response
+    {
+        $data = $request->request->all();
+        $student = $doctrine->getRepository(Student::class)->find($id);
+        $student->setName($data['name']);
+        $student->setSurname($data['surname']);
+        $student->setTelephone($data['telephone']);
+        $student->setEmail($data['email']);
+        $student->getFkIdUser()->setEmail($data['email']);
+        $student->setNumberIdentGoverment($data['nig']);
+        $class= $doctrine->getRepository(SchoolClass::class)->find($data['class']);
+        $student->setClass($class);
+        $em->persist($student);
+        $em->flush();
+        return $this->redirectToRoute('StudentEditAdmin',['id' => $id]);
     }
 }
