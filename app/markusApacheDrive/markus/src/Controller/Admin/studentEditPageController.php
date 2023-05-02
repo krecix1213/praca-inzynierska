@@ -93,4 +93,24 @@ class studentEditPageController extends AbstractController
         $em->flush();
         return $this->redirectToRoute('mainPageStudentEditAdmin');
     }
+     /**
+     * @Route("/admin/student/delete/ask/{id}", name="StudentAskDeleteAdmin")
+     */
+    public function studentAskDelete(ManagerRegistry $doctrine, int $id): Response
+    {
+        $student = $doctrine->getRepository(Student::class)->find($id);
+        return $this->render('admin/personAskDelete.html.twig', [
+            'person'=>$student, 'typ'=>'studenta'
+        ]);
+    }
+     /**
+     * @Route("/admin/student/delete/{id}", name="StudentDeleteAdmin")
+     */
+    public function studentDelete(EntityManagerInterface $em,ManagerRegistry $doctrine, int $id): Response
+    {
+        $student = $doctrine->getRepository(Student::class)->find($id);
+        $em->remove($student);
+        $em->flush();
+        return $this->redirectToRoute('mainPageStudentEditAdmin');
+    }
 }
