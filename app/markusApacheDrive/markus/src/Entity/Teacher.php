@@ -12,7 +12,8 @@ class Teacher
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
+     * @ORM\GeneratedValue(strategy="SEQUENCE")
+     * @ORM\SequenceGenerator(sequenceName="teacher_id_seq", initialValue=1, allocationSize=1)
      * @ORM\Column(type="integer")
      */
     private $id;

@@ -1,6 +1,7 @@
 {% extends "admin/base.html.twig" %}
 
 {% block body %}
+<div class="m-4"><a href="{{path('StudentAddAdmin')}}"><button class="button">Dodaj Ucznia</button></a></div>
     <table class="table">
         <tr><th>Lp.</th><th>Klasa</th><th>#</th></tr>
         {% set i = 1 %}

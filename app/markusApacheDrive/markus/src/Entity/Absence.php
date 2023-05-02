@@ -12,7 +12,8 @@ class Absence
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
+     * @ORM\GeneratedValue(strategy="SEQUENCE")
+     * @ORM\SequenceGenerator(sequenceName="absence_id_seq", initialValue=1, allocationSize=1)
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -35,12 +36,12 @@ class Absence
     private $fk_teacher_id;
 
     /**
-     * @ORM\Column(type="datetime",nullable=true)
+     * @ORM\Column(type="datetime",nullable=false, options={"default": "now()"})
      */
     private $date;
 
     /**
-     * @ORM\Column(type="datetime",nullable=true)
+     * @ORM\Column(type="datetime",nullable=false, options={"default": "now()"})
      */
     private $ts;
 

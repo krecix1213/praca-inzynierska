@@ -20,7 +20,7 @@
         <label for="class">Klasa</label>
         <select class="form-select" id="class" name="class">
         {% for v in classList %}
-            <option value="{{v.id}}">{{v.symbol}}</option>
+            <option value="{{v.id}}" {% if student.class.id == v.id %}selected{% endif %}>{{v.symbol}}</option>
         {% endfor %}
         </select><br />
 
