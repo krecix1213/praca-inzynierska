@@ -35,4 +35,25 @@ class teacherEditPageController extends AbstractController
             'user' => $user, 'teacher' => $teacher, 
         ]);
     }
+
+     /**
+     * @Route("/admin/teacher/delete/ask/{id}", name="TeacherAskDeleteAdmin")
+     */
+    public function studentAskDelete(ManagerRegistry $doctrine, int $id): Response
+    {
+        $teacher = $doctrine->getRepository(Teacher::class)->find($id);
+        return $this->render('admin/personAskDelete.html.twig', [
+            'person'=>$teacher, 'typ'=>'nauczyciela'
+        ]);
+    }
+     /**
+     * @Route("/admin/teacher/delete/{id}", name="TeacherDeleteAdmin")
+     */
+    public function studentDelete(EntityManagerInterface $em,ManagerRegistry $doctrine, int $id): Response
+    {
+        $teacher = $doctrine->getRepository(Teacher::class)->find($id);
+        $em->remove($teacher);
+        $em->flush();
+        return $this->redirectToRoute('mainPageTeachersEditAdmin');
+    }
 }

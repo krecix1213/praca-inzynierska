@@ -4,7 +4,12 @@
 <div class="container m-3">
     <div class="m-3"><b>Czy potwierdzasz usunięcie {{typ}} {{person.name}} {{person.surname}}??</b></div>
     <br />
+    {% if typ == 'studenta' %}
     <div class="m-3"><a href="{{path('StudentDeleteAdmin',{id:person.id})}}"><button class="button">TAK</button></a></div>
     <div class="m-3"><a href="{{path('mainPageStudentEditAdmin')}}"><button class="button">NIE</button></a></div>
+    {% elseif typ == 'nauczyciela' %}
+    <div class="m-3"><a href="{{path('TeacherDeleteAdmin',{id:person.id})}}"><button class="button">TAK</button></a></div>
+    <div class="m-3"><a href="{{path('mainPageTeachersEditAdmin')}}"><button class="button">NIE</button></a></div>
+    {% endif %}
 </div>
 {% endblock %}
