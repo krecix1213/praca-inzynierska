@@ -7,6 +7,7 @@ use App\Entity\Student;
 use App\Entity\SchoolClass; 
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,10 +20,9 @@ class studentEditPageController extends AbstractController
      */
     public function studentEditIndex(ManagerRegistry $doctrine): Response
     {
-        $user = $this->getUser();
         $students = $doctrine->getRepository(Student::class)->findAll();
         return $this->render('admin/studentEdit.html.twig', [
-            'user' => $user, 'students' => $students
+            'students' => $students
         ]);
     }
     /**
@@ -34,7 +34,7 @@ class studentEditPageController extends AbstractController
         $student = $doctrine->getRepository(Student::class)->find($id);
         $classList = $doctrine->getRepository(SchoolClass::class)->findAll();
         return $this->render('admin/studentEditPerson.html.twig', [
-            'user' => $user, 'student' => $student, 'classList' => $classList, 'id'=>$id
+            'student' => $student, 'classList' => $classList, 'id'=>$id
         ]);
     }
     /**
@@ -70,13 +70,14 @@ class studentEditPageController extends AbstractController
      /**
      * @Route("/admin/student/add/save", name="StudentAddSaveAdmin")
      */
-    public function studentAddSave(EntityManagerInterface $em,ManagerRegistry $doctrine, Request $request): Response
+    public function studentAddSave(UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $em,ManagerRegistry $doctrine, Request $request): Response
     {
         $data = $request->request->all();
         $user = new User();
         $user->setEmail($data['email']);
-        $user->setRoles(['ROLE_STUDENT']);
-        $user->setPassword('Student1!');
+        $user->setRoles(json_encode(['ROLE_STUDENT']));
+        $password = $passwordHasher->hashPassword($user,'Student1!');
+        $user->setPassword($password);
         $em->persist($user);
         $em->flush();
 

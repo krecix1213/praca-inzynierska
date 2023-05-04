@@ -22,10 +22,9 @@ class absencePageController extends AbstractController
      */
     public function absenceIndex(ManagerRegistry $doctrine): Response
     {
-        $user = $this->getUser();
         $schoolClass = $doctrine->getRepository(SchoolClass::class)->findAll();
         return $this->render('admin/absence.html.twig', [
-            'user' => $user, 'schoolClass' => $schoolClass
+            'schoolClass' => $schoolClass
         ]);
     }
     /**
@@ -33,7 +32,6 @@ class absencePageController extends AbstractController
      */
     public function absenceView(ManagerRegistry $doctrine, int $id): Response
     {
-        $user=$this->getUser();
         $className = $doctrine->getRepository(SchoolClass::class)->find($id)->getSymbol();
         $classIdDoctrine = $doctrine->getRepository(SchoolClass::class)->find($id)->getStudents();
         $classIdStudents = array();
@@ -58,7 +56,7 @@ class absencePageController extends AbstractController
         }
 
         return $this->render('admin/absenceView.html.twig', [
-            'user' => $user, 'className' => $className, 'classId'=>$id, 'absence' => $absence
+            'className' => $className, 'classId'=>$id, 'absence' => $absence
         ]);
     }
      /**
@@ -66,7 +64,6 @@ class absencePageController extends AbstractController
      */
     public function edit(EntityManagerInterface $em,ManagerRegistry $doctrine, Request $request, int $classId, int $id): Response
     {
-        $user=$this->getUser();
         $absenceDoctrine = $doctrine->getRepository(Absence::class)->find($id);
         $studentList = $doctrine->getRepository(Student::class)->findBy(['class'=>$classId]);
         $teacherList = $doctrine->getRepository(Teacher::class)->findAll();
@@ -84,7 +81,7 @@ class absencePageController extends AbstractController
             array_push($studentListId,$v->getId());
         }
         return $this->render('admin/absenceEdit.html.twig', [
-            'user' => $user, 'absence' => $absence, 'studentList' => $studentList, 'studentListId' => $studentListId,
+            'absence' => $absence, 'studentList' => $studentList, 'studentListId' => $studentListId,
             'teacherList' => $teacherList, 'lessonList'=>$lessonList, 'hours'=>$hours, 'id'=>$id
         ]);
     }

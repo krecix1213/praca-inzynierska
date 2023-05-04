@@ -22,9 +22,8 @@ class marksPageController extends AbstractController
     public function index(ManagerRegistry $doctrine): Response
     {
         $schoolClassListDoctrine = $doctrine->getRepository(SchoolClass::class)->findAll();
-        $user = $this->getUser();
         return $this->render('admin/marks.html.twig', [
-            'user' => $user, 'schoolClassList' => $schoolClassListDoctrine
+            'schoolClassList' => $schoolClassListDoctrine
         ]);
     }
     /**
@@ -49,9 +48,8 @@ class marksPageController extends AbstractController
                 $i++;
             }
         }
-        $user = $this->getUser();
         return $this->render('admin/marksClass.html.twig', [
-            'user' => $user, 'arrayMark' => $arrayMarks
+            'arrayMark' => $arrayMarks
         ]);
     }
     /**
@@ -66,9 +64,8 @@ class marksPageController extends AbstractController
         $teacherSelected = $mark->getTeacher()->getId();
         $studentSelected = $mark->getStudent()->getId();
         $subjectSelected = $mark->getFkIdSchoolSubject()->getId();
-        $user = $this->getUser();
         return $this->render('admin/markEdit.html.twig', [
-            'user' => $user, 'mark' => $mark, 'teacher' => $teacher, 'student'=>$student, 'schoolSubject'=>$schoolSubject, 'id'=>$id,
+            'mark' => $mark, 'teacher' => $teacher, 'student'=>$student, 'schoolSubject'=>$schoolSubject, 'id'=>$id,
             'teacherSelected'=> $teacherSelected, 'studentSelected'=> $studentSelected, 'subjectSelected'=> $subjectSelected,
         ]);
     }
