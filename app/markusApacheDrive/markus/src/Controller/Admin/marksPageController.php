@@ -105,4 +105,24 @@ class marksPageController extends AbstractController
         $em->flush();
         return $this->redirectToRoute('markEditPageAdmin',['id' => $id]);
     }
+    /**
+     * @Route("/admin/marks/delete/ask/{id}", name="MarksAskDeleteAdmin")
+     */
+    public function studentAskDelete(ManagerRegistry $doctrine, int $id): Response
+    {
+        $marks = $doctrine->getRepository(Marks::class)->find($id);
+        return $this->render('admin/personAskDelete.html.twig', [
+            'marks'=>$marks, 'typ'=>'oceny'
+        ]);
+    }
+     /**
+     * @Route("/admin/marks/delete/{id}", name="MarksDeleteAdmin")
+     */
+    public function studentDelete(EntityManagerInterface $em,ManagerRegistry $doctrine, int $id): Response
+    {
+        $marks = $doctrine->getRepository(Marks::class)->find($id);
+        $em->remove($marks);
+        $em->flush();
+        return $this->redirectToRoute('mainMarksPageAdmin');
+    }
 }

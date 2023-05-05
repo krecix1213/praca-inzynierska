@@ -82,7 +82,7 @@ class absencePageController extends AbstractController
         }
         return $this->render('admin/absenceEdit.html.twig', [
             'absence' => $absence, 'studentList' => $studentList, 'studentListId' => $studentListId,
-            'teacherList' => $teacherList, 'lessonList'=>$lessonList, 'hours'=>$hours, 'id'=>$id
+            'teacherList' => $teacherList, 'lessonList'=>$lessonList, 'hours'=>$hours, 'id'=>$id, 'classId'=>$classId
         ]);
     }
      /**
@@ -140,5 +140,29 @@ class absencePageController extends AbstractController
         $em->flush();
         return $this->redirectToRoute('AbsenceEditAdmin',['classId'=>$data['subject'] ,'id' => $id]);
     }
-
+    /**
+     * @Route("/admin/absence/delete/ask/{classId}/{id}", name="AbsenceAskDeleteAdmin")
+     */
+    public function studentAskDelete(ManagerRegistry $doctrine, int $classId, int $id): Response
+    {
+        $absenceDoctrine = $doctrine->getRepository(Absence::class)->find($id);
+        $absence=array(
+            'id' => $absenceDoctrine->getId(),
+            'lesson' => $absenceDoctrine->getFkIdSchoolLesson()->getName(),
+            'date' => $absenceDoctrine->getDate()->format('Y-m-d'),
+        );
+        return $this->render('admin/personAskDelete.html.twig', [
+            'absence'=>$absence, 'typ'=>'nieobecność', 'classId' => $classId
+        ]);
+    }
+     /**
+     * @Route("/admin/absence/delete/{id}", name="AbsenceDeleteAdmin")
+     */
+    public function studentDelete(EntityManagerInterface $em,ManagerRegistry $doctrine, int $id): Response
+    {
+        $absence = $doctrine->getRepository(Absence::class)->find($id);
+        $em->remove($absence);
+        $em->flush();
+        return $this->redirectToRoute('mainPageAbsenceAdmin');
+    }
 }
