@@ -33,9 +33,10 @@ class absencePageController extends AbstractController
             );
             $json = json_decode($v['students'],true)['students'];
             $k = array_search($user->getId(),array_column($json,'id'));
-            if($k) $tmp['json']=$json[$k];
+            if($k !== false) $tmp['json']=$json[$k];
             array_push($absence,$tmp);
         }
+        
         return $this->render('student/absence.html.twig', [
             'user' => $user, 'absence' => $absence
         ]);
