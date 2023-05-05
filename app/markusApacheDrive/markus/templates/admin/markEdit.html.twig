@@ -1,10 +1,11 @@
 {% extends "admin/base.html.twig" %}
 
+{% block title %} Edytuj ocene - Admin{% endblock %}
 
 {% block body %}
-<form>
+<form action="{{path('markSavePageAdmin',{id:id})}}" class="m-4" method="POST">
 <label for="mark">Ocena</label>
-<input class="form-control" id="mark" type="text" name="mark" value="{{mark.mark}}">
+<input class="form-control" id="mark" type="text" name="mark" value="{{marksToString(mark.mark)}}">
 
 <label for="weight">Waga</label>
 <input class="form-control" type="number" id="weight" name="weight" value="{{mark.weight}}">
@@ -12,22 +13,25 @@
 <label for="teacher">Nauczyciel</label>
 <select class="form-control" id="teacher" name="teacher">
 {% for v in teacher %}
-<option value="{{v.id}}">{{v.name}} {{v.surname}}</option>
+<option value="{{v.id}}" {% if v.id == teacherSelected %}selected{% endif %}>{{v.name}} {{v.surname}}</option>
 {% endfor %}
 </select>
 
 <label for="student">Student</label>
 <select class="form-control" id="student" name="student">
 {% for v in student %}
-<option value="{{v.id}}">{{v.name}} {{v.surname}}</option>
+<option value="{{v.id}}" {% if v.id == studentSelected %}selected{% endif %}>{{v.name}} {{v.surname}}</option>
 {% endfor %}
 </select>
 
 <label for="schoolSubject">Przedmiot</label>
 <select class="form-control" id="schoolSubject" name="schoolSubject">
 {% for v in schoolSubject %}
-<option value="{{v.id}}">{{v.name}}</option>
+<option value="{{v.id}}" {% if v.id == subjectSelected %}selected{% endif %}>{{v.name}}</option>
 {% endfor %}
 </select>
+<br />
+<input type="submit" value="Zapisz" class="form-control" />
+<a href="{{path('MarksAskDeleteAdmin',{id:id})}}" class="mt-3 mb-3 list-group-item list-group-item-action bg-danger" style="text-align:center;color:#fff;">Usuń</a>
 </form>
 {% endblock %}

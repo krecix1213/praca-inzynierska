@@ -1,11 +1,17 @@
 {% extends "admin/base.html.twig" %}
 
 {% block body %}
+<div class="m-4"><a href="{{path('TeacherAddAdmin')}}"><button class="btn">Dodaj Nauczyciela</button></a></div>
     <table class="table">
-        <tr><th>Lp.</th><th>Klasa</th><th>#</th></tr>
+        <tr><th>Lp.</th><th>Nauczyciel</th><th>#</th><th>#</th></tr>
         {% set i = 1 %}
         {% for v in teacher %}
-            <tr><td>{{i}}</td><td>{{v.name}} {{v.surname}}</td><td><a href="{{path('TeacherEditAdmin',{id:v.id})}}">Edytuj Nauczyciela</a></td></tr>
+            <tr>
+                <td>{{i}}</td>
+                <td>{{v.name}} {{v.surname}}</td>
+                <td><a href="{{path('TeacherEditAdmin',{id:v.id})}}">Edytuj Nauczyciela</a></td>
+                <td><a href="{{path('TeacherAskDeleteAdmin',{id:v.id})}}">Usuń Nauczyciela</a></td>
+            </tr>
         {% set i = i + 1 %}
         {% endfor %}
     </table>

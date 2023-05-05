@@ -12,7 +12,8 @@ class Marks
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
+     * @ORM\GeneratedValue(strategy="SEQUENCE")
+     * @ORM\SequenceGenerator(sequenceName="marks_id_seq", initialValue=1, allocationSize=1)
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -46,7 +47,7 @@ class Marks
     private $fk_id_schoolSubject;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=false, options={"default": "now()"})
      */
     private $ts;
 

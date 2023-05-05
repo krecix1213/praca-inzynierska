@@ -22,10 +22,9 @@ class absencePageController extends AbstractController
      */
     public function absenceIndex(ManagerRegistry $doctrine): Response
     {
-        $user = $this->getUser();
         $schoolClass = $doctrine->getRepository(SchoolClass::class)->findAll();
         return $this->render('admin/absence.html.twig', [
-            'user' => $user, 'schoolClass' => $schoolClass
+            'schoolClass' => $schoolClass
         ]);
     }
     /**
@@ -33,7 +32,6 @@ class absencePageController extends AbstractController
      */
     public function absenceView(ManagerRegistry $doctrine, int $id): Response
     {
-        $user=$this->getUser();
         $className = $doctrine->getRepository(SchoolClass::class)->find($id)->getSymbol();
         $classIdDoctrine = $doctrine->getRepository(SchoolClass::class)->find($id)->getStudents();
         $classIdStudents = array();
@@ -58,7 +56,7 @@ class absencePageController extends AbstractController
         }
 
         return $this->render('admin/absenceView.html.twig', [
-            'user' => $user, 'className' => $className, 'classId'=>$id, 'absence' => $absence
+            'className' => $className, 'classId'=>$id, 'absence' => $absence
         ]);
     }
      /**
@@ -66,7 +64,6 @@ class absencePageController extends AbstractController
      */
     public function edit(EntityManagerInterface $em,ManagerRegistry $doctrine, Request $request, int $classId, int $id): Response
     {
-        $user=$this->getUser();
         $absenceDoctrine = $doctrine->getRepository(Absence::class)->find($id);
         $studentList = $doctrine->getRepository(Student::class)->findBy(['class'=>$classId]);
         $teacherList = $doctrine->getRepository(Teacher::class)->findAll();
@@ -84,8 +81,8 @@ class absencePageController extends AbstractController
             array_push($studentListId,$v->getId());
         }
         return $this->render('admin/absenceEdit.html.twig', [
-            'user' => $user, 'absence' => $absence, 'studentList' => $studentList, 'studentListId' => $studentListId,
-            'teacherList' => $teacherList, 'lessonList'=>$lessonList, 'hours'=>$hours
+            'absence' => $absence, 'studentList' => $studentList, 'studentListId' => $studentListId,
+            'teacherList' => $teacherList, 'lessonList'=>$lessonList, 'hours'=>$hours, 'id'=>$id, 'classId'=>$classId
         ]);
     }
      /**
@@ -94,7 +91,6 @@ class absencePageController extends AbstractController
     public function absenceAdd(EntityManagerInterface $em,ManagerRegistry $doctrine, Request $request, int $id): Response
     {
         $data = $request->request->all();
-        $schoolSubject = $doctrine->getRepository(SchoolSubject::class)->find($data['subject']);
         $array=array();
         if(isset($data['student']['OB'])){
             foreach($data['student']['OB'] as $k => $v){
@@ -126,20 +122,47 @@ class absencePageController extends AbstractController
                 );
                 array_push($array,$tmp);
         }}
+        
         $students = array('students'=>$array);
         $date = $data['date'];
         $dateHours = preg_match("/\d?\d:\d\d -/",$data['dateHours'],$match);
         $dateHours = substr($match[0],0,-2);
+        $schoolSubject = $doctrine->getRepository(SchoolSubject::class)->find($data['subject']);
+        $teacher = $doctrine->getRepository(Teacher::class)->find($data['teacher']);
         $date = $date." ".$dateHours;
         $dt = new \DateTimeImmutable($date, new \DateTimeZone("Europe/Warsaw"));
-        $absence = new Absence();
+        $absence = $doctrine->getRepository(Absence::class)->find($id);
         $absence->setFkIdSchoolLesson($schoolSubject);
-        $absence->setFkTeacherId($userDoctrine);
+        $absence->setFkTeacherId($teacher);
         $absence->setStudents($students);
         $absence->setDate($dt);
         $em->persist($absence);
         $em->flush();
-        return $this->redirectToRoute('absenceClassViewPageTeacher',['id' => $id]);
+        return $this->redirectToRoute('AbsenceEditAdmin',['classId'=>$data['subject'] ,'id' => $id]);
     }
-
+    /**
+     * @Route("/admin/absence/delete/ask/{classId}/{id}", name="AbsenceAskDeleteAdmin")
+     */
+    public function studentAskDelete(ManagerRegistry $doctrine, int $classId, int $id): Response
+    {
+        $absenceDoctrine = $doctrine->getRepository(Absence::class)->find($id);
+        $absence=array(
+            'id' => $absenceDoctrine->getId(),
+            'lesson' => $absenceDoctrine->getFkIdSchoolLesson()->getName(),
+            'date' => $absenceDoctrine->getDate()->format('Y-m-d'),
+        );
+        return $this->render('admin/personAskDelete.html.twig', [
+            'absence'=>$absence, 'typ'=>'nieobecność', 'classId' => $classId
+        ]);
+    }
+     /**
+     * @Route("/admin/absence/delete/{id}", name="AbsenceDeleteAdmin")
+     */
+    public function studentDelete(EntityManagerInterface $em,ManagerRegistry $doctrine, int $id): Response
+    {
+        $absence = $doctrine->getRepository(Absence::class)->find($id);
+        $em->remove($absence);
+        $em->flush();
+        return $this->redirectToRoute('mainPageAbsenceAdmin');
+    }
 }

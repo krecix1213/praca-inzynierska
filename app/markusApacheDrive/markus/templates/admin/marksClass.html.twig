@@ -11,7 +11,7 @@
             <td>
             {% for k,m in v %}
             {% for valueM in m %}
-                <a href="{{path('markEditPageAdmin', {id:valueM.id})}}" target="_blank">
+                <a href="{{path('markEditPageAdmin', {id:valueM.id})}}">
                 {{marks(valueM.marks, valueM.subjectShortcut, valueM.weight, valueM.teacher)|raw}}</a>
             {% endfor %}
             {% endfor %}

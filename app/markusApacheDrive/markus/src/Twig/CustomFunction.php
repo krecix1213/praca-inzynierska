@@ -10,6 +10,7 @@ class CustomFunction extends AbstractExtension
     {
         return [
             new TwigFunction('marks', [$this, 'marksContainer']),
+            new TwigFunction('marksToString', [$this, 'markToString']),
             new TwigFunction('absenceType', [$this, 'absenceType']),
         ];
     }
@@ -32,6 +33,18 @@ class CustomFunction extends AbstractExtension
                 Waga: $weight <br />
                 Nauczyciel: $teacher</span></div>";
     }    
+    public function markToString($marks){
+        if(preg_match("/(\d)(.75)/",$marks)){
+            $marks = (int) $marks;
+            $marks++;
+            $marks .= "-";
+        }
+        if(preg_match("/(\d)(.5)/",$marks)){
+            $marks = (int) $marks;
+            $marks .= "+";
+        }
+        return $marks;
+    }
     public function absenceType(string $typ){
         $tab = array(
             'NB' => 'Nieobecność',

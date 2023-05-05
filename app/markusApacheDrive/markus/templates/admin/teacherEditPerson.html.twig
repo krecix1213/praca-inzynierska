@@ -1,18 +1,18 @@
 {% extends "admin/base.html.twig" %}
 
 {% block body %}
-    <form class="m-4">
+    <form action="{{path('TeacherSaveAdmin',{id:id})}}" class="m-4" method="POST">
         <label for="Name">Imię</label>
-        <input class="form-control" type="text" id="Name" name="Name" value="{{teacher.name}}" /><br />
+        <input class="form-control" type="text" id="Name" name="name" value="{{teacher.name}}" /><br />
 
         <label for="Surname">Nazwisko</label>
-        <input class="form-control" id="Surname" type="text" name="Surname" value="{{teacher.surname}}" /><br />
+        <input class="form-control" id="Surname" type="text" name="surname" value="{{teacher.surname}}" /><br />
 
         <label for="Email">Email</label>
-        <input class="form-control" type="text" id="Email" name="Email" value="{{teacher.email}}" /><br />
+        <input class="form-control" type="text" id="Email" name="email" value="{{teacher.email}}" /><br />
 
         <label for="Telephone">Telefon</label>
-        <input class="form-control" id="Telephone" type="tel" name="Telephone" value="{{teacher.telephone}}" /><br />
+        <input class="form-control" id="Telephone" type="tel" name="telephone" value="{{teacher.telephone}}" /><br />
 
         <input class="form-control" type="submit" value="Zapisz" />
     </form>

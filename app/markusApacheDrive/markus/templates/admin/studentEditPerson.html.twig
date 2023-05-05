@@ -1,26 +1,26 @@
 {% extends "admin/base.html.twig" %}
 
 {% block body %}
-    <form class="m-4">
-        <label for="Name">Imię</label>
-        <input class="form-control" type="text" id="Name" name="Name" value="{{student.name}}" /><br />
+    <form action="{{path('StudentSaveAdmin',{id})}}" class="m-4" method="POST">
+        <label for="name">Imię</label>
+        <input class="form-control" type="text" id="name" name="name" value="{{student.name}}" /><br />
 
         <label for="Surname">Nazwisko</label>
-        <input class="form-control" id="Surname" type="text" name="Surname" value="{{student.surname}}" /><br />
+        <input class="form-control" id="surname" type="text" name="surname" value="{{student.surname}}" /><br />
 
         <label for="Telephone">Telefon</label>
-        <input class="form-control" id="Telephone" type="tel" name="Telephone" value="{{student.telephone}}" /><br />
+        <input class="form-control" id="telephone" type="tel" name="telephone" value="{{student.telephone}}" /><br />
 
         <label for="email">Email</label>
-        <input class="form-control" id="email" type="email" name="Email" value="{{student.email}}" /><br />
+        <input class="form-control" id="email" type="email" name="email" value="{{student.email}}" /><br />
 
         <label for="nig">PESEL</label>
-        <input class="form-control" id="nig" type="number" name="NIG" value="{{student.NumberIdentGoverment}}" /><br />
+        <input class="form-control" id="nig" type="number" name="nig" value="{{student.NumberIdentGoverment}}" /><br />
 
         <label for="class">Klasa</label>
         <select class="form-select" id="class" name="class">
         {% for v in classList %}
-            <option value="{{v.id}}">{{v.symbol}}</option>
+            <option value="{{v.id}}" {% if student.class.id == v.id %}selected{% endif %}>{{v.symbol}}</option>
         {% endfor %}
         </select><br />
 

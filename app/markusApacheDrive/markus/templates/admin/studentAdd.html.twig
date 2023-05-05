@@ -1,0 +1,29 @@
+{% extends "admin/base.html.twig" %}
+
+{% block body %}
+    <form action="{{path('StudentAddSaveAdmin')}}" class="m-4" method="POST">
+        <label for="name">Imię</label>
+        <input class="form-control" type="text" id="name" name="name"/><br />
+
+        <label for="Surname">Nazwisko</label>
+        <input class="form-control" id="surname" type="text" name="surname"/><br />
+
+        <label for="Telephone">Telefon</label>
+        <input class="form-control" id="telephone" type="tel" name="telephone"/><br />
+
+        <label for="email">Email</label>
+        <input class="form-control" id="email" type="email" name="email"/><br />
+
+        <label for="nig">PESEL</label>
+        <input class="form-control" id="nig" type="number" name="nig"/><br />
+
+        <label for="class">Klasa</label>
+        <select class="form-select" id="class" name="class">
+        {% for v in classList %}
+            <option value="{{v.id}}">{{v.symbol}}</option>
+        {% endfor %}
+        </select><br />
+
+        <input class="form-control" type="submit" value="Dodaj" />
+    </form>
+{% endblock %}
