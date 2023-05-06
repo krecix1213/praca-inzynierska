@@ -7,19 +7,23 @@
     <br />
     {% endif %}
     {% if typ == 'studenta' %}
-    <div class="m-3"><a href="{{path('StudentDeleteAdmin',{id:person.id})}}"><button class="btn btn-success">TAK</button></a></div>
-    <div class="m-3"><a href="{{path('mainPageStudentEditAdmin')}}"><button class="btn btn-danger">NIE</button></a></div>
+        <div class="m-3"><a href="{{path('StudentDeleteAdmin',{id:person.id})}}"><button class="btn btn-success">TAK</button></a></div>
+        <div class="m-3"><a href="{{path('mainPageStudentEditAdmin')}}"><button class="btn btn-danger">NIE</button></a></div>
     {% elseif typ == 'nauczyciela' %}
-    <div class="m-3"><a href="{{path('TeacherDeleteAdmin',{id:person.id})}}"><button class="btn btn-success">TAK</button></a></div>
-    <div class="m-3"><a href="{{path('mainPageTeachersEditAdmin')}}"><button class="btn btn-danger">NIE</button></a></div>
+        <div class="m-3"><a href="{{path('TeacherDeleteAdmin',{id:person.id})}}"><button class="btn btn-success">TAK</button></a></div>
+        <div class="m-3"><a href="{{path('mainPageTeachersEditAdmin')}}"><button class="btn btn-danger">NIE</button></a></div>
     {% elseif typ == 'oceny' %}
-    <div class="m-3"><b>Czy potwierdzasz usunięcie {{typ}} {{marksToString(marks.mark)}} o wadze {{marks.weight}} ??</b></div>
-    <div class="m-3"><a href="{{path('MarksDeleteAdmin',{id:marks.id})}}"><button class="btn btn-success">TAK</button></a></div>
-    <div class="m-3"><a href="{{path('markEditPageAdmin',{id:marks.id})}}"><button class="btn btn-danger">NIE</button></a></div>
+        <div class="m-3"><b>Czy potwierdzasz usunięcie {{typ}} {{marksToString(marks.mark)}} o wadze {{marks.weight}} ??</b></div>
+        <div class="m-3"><a href="{{path('MarksDeleteAdmin',{id:marks.id})}}"><button class="btn btn-success">TAK</button></a></div>
+        <div class="m-3"><a href="{{path('markEditPageAdmin',{id:marks.id})}}"><button class="btn btn-danger">NIE</button></a></div>
     {% elseif typ == 'nieobecność' %}
-    <div class="m-3"><b>Czy potwierdzasz usunięcie {{typ}} {{absence.lesson}} z dnia {{absence.date}} ??</b></div>
-    <div class="m-3"><a href="{{path('AbsenceDeleteAdmin',{id:absence.id})}}"><button class="btn btn-success">TAK</button></a></div>
-    <div class="m-3"><a href="{{path('AbsenceEditAdmin',{classId:classId,id:absence.id})}}"><button class="btn btn-danger">NIE</button></a></div>
+        <div class="m-3"><b>Czy potwierdzasz usunięcie {{typ}} {{absence.lesson}} z dnia {{absence.date}} ??</b></div>
+        <div class="m-3"><a href="{{path('AbsenceDeleteAdmin',{id:absence.id})}}"><button class="btn btn-success">TAK</button></a></div>
+        <div class="m-3"><a href="{{path('AbsenceEditAdmin',{classId:classId,id:absence.id})}}"><button class="btn btn-danger">NIE</button></a></div>
+    {% elseif typ == 'przedmiot' %}
+        <div class="m-3"><b>Czy potwierdzasz usunięcie {{typ}} {{schoolSubject.name}} ??</b></div>
+        <div class="m-3"><a href="{{path('SubjectDeleteAdmin',{id:schoolSubject.id})}}"><button class="btn btn-success">TAK</button></a></div>
+        <div class="m-3"><a href="{{path('mainPageSubjectsAdmin')}}"><button class="btn btn-danger">NIE</button></a></div>
     {% endif %}
 </div>
 {% endblock %}

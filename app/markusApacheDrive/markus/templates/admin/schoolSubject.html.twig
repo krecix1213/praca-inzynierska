@@ -1,0 +1,17 @@
+{% extends "admin/base.html.twig" %}
+
+{% block body %}
+<div class="m-4"><a href="{{path('SubjectAddAdmin')}}"><button class="btn btn-success">Dodaj Przedmiot</button></a></div>
+    <table class="table">
+        <tr><th>Lp.</th><th>Klasa</th><th>Skrót</th><th>#</th><th>#</th></tr>
+        {% set i = 1 %}
+        {% for v in schoolSubject %}
+            <tr>
+            <td>{{i}}</td><td>{{v.name}}</td><td>{{v.shortcut}}</td>
+            <td><a href="{{path('SubjectEditAdmin',{id:v.id})}}">Edytuj Przedmiot</a></td>
+            <td><a href="{{path('SubjectAskDeleteAdmin',{id:v.id})}}">Usuń Przedmiot</a></td>
+            </tr>
+        {% set i = i + 1 %}
+        {% endfor %}
+    </table>
+{% endblock %}

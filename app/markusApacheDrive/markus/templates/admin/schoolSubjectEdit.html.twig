@@ -1,0 +1,13 @@
+{% extends "admin/base.html.twig" %}
+
+{% block body %}
+    <form action="{{path('SubjectSaveAdmin',{id})}}" class="m-4" method="POST">
+        <label for="name">Nazwa</label>
+        <input class="form-control" type="text" id="name" name="name" value="{{schoolSubject.name}}" /><br />
+
+        <label for="shortcut">Skrót</label>
+        <input class="form-control" id="shortcut" type="text" name="shortcut" value="{{schoolSubject.shortcut}}" /><br />
+
+        <input class="form-control" type="submit" value="Zapisz" />
+    </form>
+{% endblock %}
