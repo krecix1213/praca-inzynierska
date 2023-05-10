@@ -1,0 +1,37 @@
+{% extends "admin/base.html.twig" %}
+
+{% block body %}
+    <form action="{{path('ClassEditSaveAdmin',{id:id})}}" class="m-4" method="POST">
+        <label for="level">Poziom</label>
+        <input class="form-control" type="number" id="level" name="level" value="{{class.level}}" /><br />
+
+        <label for="symbol">Symbol</label>
+        <input class="form-control" id="symbol" type="text" name="symbol" value="{{class.symbol}}" /><br />
+
+        <label for="headTeacher">Wychowawca</label>
+        <select class="form-control" id="headTeacher" name="headTeacher">
+            {% for v in teacher %}
+                <option value="{{v.id}}" {% if v.id == class.headteacher.id %}selected{% endif %}>{{v.name}} {{v.surname}}</option>
+            {% endfor %}
+        </select><br />
+
+        <label for="headStudent">Przewodniczący klasy</label>
+        <select class="form-control" id="headStudent" name="headStudent">
+            {% for v in student %}
+                <option value="{{v.id}}" {% if v.id == class.headstudent.id %}selected{% endif %}>{{v.name}} {{v.surname}}</option>
+            {% endfor %}
+        </select><br />
+
+        <label for="students">Studenci</label>
+        <hr />
+        <table class="table" style="width:30%">
+        <tr><th>Imię i nazwisko</th><th>X</th></tr>
+            {% for v in student %}
+                <tr><td>{{v.name}} {{v.surname}}</td><td><input type="checkbox" name="students[]" value="{{v.id}}" {% if v.id in studentInClassId %} checked{% endif %}/></td></tr>
+            {% endfor %}
+        </table>
+        <a href="{{path('ClassEditPlanAdmin',{id:id})}}" class="mt-3 mb-3 list-group-item list-group-item-action bg-info" style="text-align:center;color:#fff;">Zmień plan lekcji</a>
+        <a href="{{path('ClassAskDeleteAdmin',{id:id})}}" class="mt-3 mb-3 list-group-item list-group-item-action bg-danger" style="text-align:center;color:#fff;">Usuń</a>
+        <input class="form-control" type="submit" value="Zapisz" />
+    </form>
+{% endblock %}

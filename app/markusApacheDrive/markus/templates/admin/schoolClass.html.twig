@@ -1,0 +1,17 @@
+{% extends "admin/base.html.twig" %}
+
+{% block body %}
+<div class="m-4"><a href="{{path('ClassAddAdmin')}}"><button class="btn btn-success">Dodaj Klasę</button></a></div>
+    <table class="table">
+        <tr><th>Lp.</th><th>Klasa</th><th>Poziom</th><th>#</th><th>#</th></tr>
+        {% set i = 1 %}
+        {% for v in schoolClass %}
+            <tr>
+            <td>{{i}}</td><td>{{v.symbol}}</td><td>{{v.level}}</td>
+            <td><a href="{{path('ClassEditPageAdmin',{id:v.id})}}">Edytuj Klasę</a></td>
+            <td><a href="{{path('ClassAskDeleteAdmin',{id:v.id})}}">Usuń Klasę</a></td>
+            </tr>
+        {% set i = i + 1 %}
+        {% endfor %}
+    </table>
+{% endblock %}

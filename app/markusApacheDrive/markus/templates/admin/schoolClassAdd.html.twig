@@ -1,0 +1,35 @@
+{% extends "admin/base.html.twig" %}
+
+{% block body %}
+    <form action="{{path('ClassSaveAddAdmin')}}" class="m-4" method="POST">
+        <label for="level">Poziom</label>
+        <input class="form-control" type="number" id="level" name="level" /><br />
+
+        <label for="symbol">Symbol</label>
+        <input class="form-control" id="symbol" type="text" name="symbol" /><br />
+
+        <label for="headTeacher">Wychowawca</label>
+        <select class="form-control" id="headTeacher" name="headTeacher">
+            {% for v in teacher %}
+                <option value="{{v.id}}">{{v.name}} {{v.surname}}</option>
+            {% endfor %}
+        </select><br />
+
+        <label for="headStudent">Przewodniczący klasy</label>
+        <select class="form-control" id="headStudent" name="headStudent">
+            {% for v in student %}
+                <option value="{{v.id}}">{{v.name}} {{v.surname}}</option>
+            {% endfor %}
+        </select><br />
+
+        <label for="students">Studenci</label>
+        <hr />
+        <table class="table" style="width:30%">
+        <tr><th>Imię i nazwisko</th><th>X</th></tr>
+            {% for v in student %}
+                <tr><td>{{v.name}} {{v.surname}}</td><td><input type="checkbox" name="students[]" value="{{v.id}}" /></td></tr>
+            {% endfor %}
+        </table>
+        <input class="form-control" type="submit" value="Zapisz" />
+    </form>
+{% endblock %}
