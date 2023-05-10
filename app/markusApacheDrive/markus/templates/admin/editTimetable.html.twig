@@ -1,0 +1,89 @@
+{% extends "admin/base.html.twig" %}
+
+{% block body %}
+<form action="{{path('ClassSavePlanAdmin',{id})}}" method="POST">
+<table class="table">
+    <tr><th>Godzina </th><th>Poniedziałek</th><th>Wtorek</th><th>Środa</th><th>Czwartek</th><th>Piątek</th></tr>
+    {% for v in 0..9 %}
+        <tr>
+        <td>{{hours[v]['rozpoczecie']}} - {{hours[v]['koniec']}}</td>
+        <td>
+        <select name="timetable[Poniedzialek][{{v}}][subject]" class="form-control">
+            <option value="false"></option>
+            {% for s in subjects %}
+                <option value="{{s.id}}" {% if s.id == timetable['Poniedzialek'][v]['SubjectId']|default('') %}selected{% endif %}>{{s.name}}</option>
+            {% endfor %}
+        </select><br />
+        <select name="timetable[Poniedzialek][{{v}}][teacher]" class="form-control">
+            <option value="false"></option>
+            {% for t in teachers %}
+                <option value="{{t.id}}" {% if t.id == timetable['Poniedzialek'][v]['TeacherId']|default('') %}selected{% endif %}>{{t.name}} {{t.surname}}</option>
+            {% endfor %}
+        </select>
+        </td>
+
+        <td>
+        <select name="timetable[Wtorek][{{v}}][subject]" class="form-control">
+            <option value="false"></option>
+            {% for s in subjects %}
+                <option value="{{s.id}}" {% if s.id == timetable['Wtorek'][v]['SubjectId']|default('') %}selected{% endif %}>{{s.name}}</option>
+            {% endfor %}
+        </select><br />
+        <select name="timetable[Wtorek][{{v}}][teacher]" class="form-control">
+            <option value="false"></option>
+            {% for t in teachers %}
+                <option value="{{t.id}}" {% if t.id == timetable['Wtorek'][v]['TeacherId']|default('') %}selected{% endif %}>{{t.name}} {{t.surname}}</option>
+            {% endfor %}
+        </select>
+        </td>
+
+        <td>
+        <select name="timetable[Sroda][{{v}}][subject]" class="form-control">
+            <option value="false"></option>
+            {% for s in subjects %}
+                <option value="{{s.id}}" {% if s.id == timetable['Sroda'][v]['SubjectId']|default('') %}selected{% endif %}>{{s.name}}</option>
+            {% endfor %}
+        </select><br />
+        <select name="timetable[Sroda][{{v}}][teacher]" class="form-control">
+            <option value="false"></option>
+            {% for t in teachers %}
+                <option value="{{t.id}}" {% if t.id == timetable['Sroda'][v]['TeacherId']|default('') %}selected{% endif %}>{{t.name}} {{t.surname}}</option>
+            {% endfor %}
+        </select>
+        </td>
+
+        <td>
+        <select name="timetable[Czwartek][{{v}}][subject]" class="form-control">
+            <option value="false"></option>
+            {% for s in subjects %}
+                <option value="{{s.id}}" {% if s.id == timetable['Czwartek'][v]['SubjectId']|default('') %}selected{% endif %}>{{s.name}}</option>
+            {% endfor %}
+        </select><br />
+        <select name="timetable[Czwartek][{{v}}][teacher]" class="form-control">
+            <option value="false"></option>
+            {% for t in teachers %}
+                <option value="{{t.id}}" {% if t.id == timetable['Czwartek'][v]['TeacherId']|default('') %}selected{% endif %}>{{t.name}} {{t.surname}}</option>
+            {% endfor %}
+        </select>
+        </td>
+
+        <td>
+        <select name="timetable[Piatek][{{v}}][subject]" class="form-control">
+            <option value="false"></option>
+            {% for s in subjects %}
+                <option value="{{s.id}}" {% if s.id == timetable['Piatek'][v]['SubjectId']|default('') %}selected{% endif %}>{{s.name}}</option>
+            {% endfor %}
+        </select><br />
+        <select name="timetable[Piatek][{{v}}][teacher]" class="form-control">
+            <option value="false"></option>
+            {% for t in teachers %}
+                <option value="{{t.id}}" {% if t.id == timetable['Piatek'][v]['TeacherId']|default('') %}selected{% endif %}>{{t.name}} {{t.surname}}</option>
+            {% endfor %}
+        </select>
+        </td>
+        </tr>
+    {% endfor %}
+</table>
+<input type="submit" class="form-control" value="Zapisz" />
+</form>
+{% endblock %}

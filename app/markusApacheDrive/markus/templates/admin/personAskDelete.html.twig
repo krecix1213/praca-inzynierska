@@ -24,6 +24,10 @@
         <div class="m-3"><b>Czy potwierdzasz usunięcie {{typ}} {{schoolSubject.name}} ??</b></div>
         <div class="m-3"><a href="{{path('SubjectDeleteAdmin',{id:schoolSubject.id})}}"><button class="btn btn-success">TAK</button></a></div>
         <div class="m-3"><a href="{{path('mainPageSubjectsAdmin')}}"><button class="btn btn-danger">NIE</button></a></div>
+    {% elseif typ == 'klasę' %}
+        <div class="m-3"><b>Czy potwierdzasz usunięcie {{typ}} {{class.symbol}} ??</b></div>
+        <div class="m-3"><a href="{{path('ClassDeleteAdmin',{id:class.id})}}"><button class="btn btn-success">TAK</button></a></div>
+        <div class="m-3"><a href="{{path('ClassEditPageAdmin',{id:class.id})}}"><button class="btn btn-danger">NIE</button></a></div>
     {% endif %}
 </div>
 {% endblock %}

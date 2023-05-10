@@ -3,7 +3,7 @@
 {% block body %}
 <div class="m-4"><a href="{{path('SubjectAddAdmin')}}"><button class="btn btn-success">Dodaj Przedmiot</button></a></div>
     <table class="table">
-        <tr><th>Lp.</th><th>Klasa</th><th>Skrót</th><th>#</th><th>#</th></tr>
+        <tr><th>Lp.</th><th>Przedmiot</th><th>Skrót</th><th>#</th><th>#</th></tr>
         {% set i = 1 %}
         {% for v in schoolSubject %}
             <tr>
