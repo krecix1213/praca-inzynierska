@@ -20,7 +20,6 @@ class timeTablePageController extends AbstractController
         $user = $doctrine->getRepository(Student::class)->findOneBy(['fk_id_user'=>$this->getUser()->getId()]);   
         $schoolPlan = $user->getClass()->getBasicTimetable();
         $plan = array();
-        dump($schoolPlan);
         foreach($schoolPlan as $k => $value){
             foreach($value as $v){
                 $plan[$k][$v['Hours']]['Subject'] = $v['Subject'];
