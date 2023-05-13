@@ -1,5 +1,7 @@
 {% extends "admin/base.html.twig" %}
 
+{% block title %}<title>Edytuj Plan Lekcji - Admin</title>{% endblock %}
+
 {% block body %}
 <form action="{{path('ClassSavePlanAdmin',{id})}}" method="POST">
 <table class="table">

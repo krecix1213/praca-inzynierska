@@ -1,5 +1,7 @@
 {% extends "admin/base.html.twig" %}
 
+{% block title %}<title>Edytuj studenta - Admin</title>{% endblock %}
+
 {% block body %}
     <form action="{{path('StudentSaveAdmin',{id})}}" class="m-4" method="POST">
         <label for="name">Imię</label>

@@ -1,5 +1,7 @@
 {% extends "admin/base.html.twig" %}
 
+{% block title %}<title>Dodaj klasę - Admin</title>{% endblock %}
+
 {% block body %}
     <form action="{{path('ClassSaveAddAdmin')}}" class="m-4" method="POST">
         <label for="level">Poziom</label>
